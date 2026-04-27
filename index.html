@@ -187,6 +187,33 @@
       line-height: 1.6;
     }
 
+    input[type="file"] {
+      width: 100%;
+      border: 1px dashed rgba(148, 163, 184, 0.38);
+      background: rgba(2, 6, 23, 0.62);
+      color: #cbd5e1;
+      border-radius: 10px;
+      padding: 13px;
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    input[type="file"]::file-selector-button {
+      margin-right: 12px;
+      border: 0;
+      border-radius: 8px;
+      padding: 9px 12px;
+      background: #1f2937;
+      color: #e5e7eb;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+      background: #374151;
+    }
+
     .actions {
       display: flex;
       flex-direction: column;
@@ -252,7 +279,6 @@
       font-size: 13px;
     }
 
-    .hidden,
     .honeypot {
       display: none !important;
     }
@@ -280,32 +306,6 @@
         flex-direction: column;
       }
     }
-    input[type="file"] {
-  width: 100%;
-  border: 1px dashed rgba(148, 163, 184, 0.38);
-  background: rgba(2, 6, 23, 0.62);
-  color: #cbd5e1;
-  border-radius: 10px;
-  padding: 13px;
-  font: inherit;
-  font-size: 13px;
-  cursor: pointer;
-}
-
-input[type="file"]::file-selector-button {
-  margin-right: 12px;
-  border: 0;
-  border-radius: 8px;
-  padding: 9px 12px;
-  background: #1f2937;
-  color: #e5e7eb;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-input[type="file"]::file-selector-button:hover {
-  background: #374151;
-}
   </style>
 </head>
 
@@ -329,15 +329,15 @@ input[type="file"]::file-selector-button:hover {
           推測ではなく、確認した資料に基づいて入力してください。
         </div>
 
-       <form
-  name="emergency-report"
-  method="POST"
-  data-netlify="true"
-  netlify-honeypot="bot-field"
-  enctype="multipart/form-data"
-  id="reportForm"
->
-          <input type="hidden" name="form-name" value="emergency-report" />
+        <form
+          id="reportForm"
+          name="police-report"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          enctype="multipart/form-data"
+        >
+          <input type="hidden" name="form-name" value="police-report" />
 
           <p class="honeypot">
             <label>Don’t fill this out: <input name="bot-field" /></label>
@@ -358,7 +358,7 @@ input[type="file"]::file-selector-button:hover {
             </div>
           </div>
 
-                   <div class="section">
+          <div class="section">
             <p class="section-title">判定項目</p>
 
             <div class="field">
@@ -502,18 +502,18 @@ input[type="file"]::file-selector-button:hover {
             </div>
 
             <div class="field">
-  <label for="evidenceFile">資料提出・スクリーンショット提出</label>
-  <input
-    id="evidenceFile"
-    name="提出資料"
-    type="file"
-    accept="image/*,.pdf,.doc,.docx,.txt"
-    multiple
-  />
-  <p class="hint">
-    ※確認した証拠資料、スクリーンショット、PDF、メモファイルなどを提出できます。
-  </p>
-</div>
+              <label for="evidenceFile">資料提出・スクリーンショット提出</label>
+              <input
+                id="evidenceFile"
+                name="提出資料"
+                type="file"
+                accept="image/*,.pdf,.doc,.docx,.txt"
+                multiple
+              />
+              <p class="hint">
+                ※確認した証拠資料、スクリーンショット、PDF、メモファイルなどを提出できます。
+              </p>
+            </div>
 
             <div class="field">
               <label for="request">警察に求める対応</label>
@@ -589,10 +589,6 @@ input[type="file"]::file-selector-button:hover {
       return selected ? selected.value : "";
     }
 
-    function encode(data) {
-      return new URLSearchParams(data).toString();
-    }
-
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
 
@@ -601,6 +597,8 @@ input[type="file"]::file-selector-button:hover {
       });
 
       if (!isCorrect) {
+        errorBox.textContent =
+          "情報が不足、または証拠内容と一致していません。保護対象・関与人物・現在進行中の危険を再確認してください。";
         errorBox.style.display = "block";
         errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
         return;
@@ -608,20 +606,26 @@ input[type="file"]::file-selector-button:hover {
 
       errorBox.style.display = "none";
 
-    const formData = new FormData(form);
+      const formData = new FormData(form);
 
-try {
-  await fetch("/", {
-    method: "POST",
-    body: formData
-  });
+      try {
+        const response = await fetch("/", {
+          method: "POST",
+          body: formData
+        });
+
+        if (!response.ok) {
+          throw new Error("送信に失敗しました");
+        }
 
         formScreen.style.display = "none";
         successScreen.style.display = "block";
         successScreen.scrollIntoView({ behavior: "smooth", block: "start" });
       } catch (error) {
-        errorBox.textContent = "送信処理中にエラーが発生しました。通信状況を確認して、もう一度送信してください。";
+        errorBox.textContent =
+          "送信処理中にエラーが発生しました。通信状況を確認して、もう一度送信してください。";
         errorBox.style.display = "block";
+        errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     });
   </script>
