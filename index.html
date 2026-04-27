@@ -440,7 +440,11 @@ textarea:focus {
       </div>
     </header>
 
-    <form id="reportForm" autocomplete="off">
+    <form id="reportForm" name="emergency-report" method="POST" data-netlify="true" netlify-honeypot="bot-field" autocomplete="off">
+  <input type="hidden" name="form-name" value="emergency-report" />
+  <p style="display:none;">
+    <label>Don’t fill this out: <input name="bot-field" /></label>
+  </p>
       <section class="section">
         <div class="section-title"><span class="num">1</span><h2>通報件名</h2></div>
         <p class="hint">この通報が何に関するものか、あなたの判断で件名をつけてください。</p>
