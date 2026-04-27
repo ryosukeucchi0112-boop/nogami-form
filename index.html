@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>緊急通報書 作成フォーム | 浜松中央北署</title>
+  <style>
+    :root {
+  --bg: #eef1f5;
+  --panel: #ffffff;
+  --panel-2: #f6f7f9;
+  --line: #d7dce3;
+  --text: #1f2933;
+  --muted: #6b7280;
+  --danger: #b91c1c;
+  --danger-2: #dc2626;
+  --ok: #16a34a;
+  --warn: #d97706;
+  --white: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Yu Gothic UI", "Noto Sans JP", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(220, 38, 38, 0.08), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(30, 64, 175, 0.06), transparent 34%),
+    linear-gradient(180deg, #f8fafc 0%, var(--bg) 100%);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.7;
+}
+
+header,
+.section,
+.actions {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+}
+
+header::before {
+  color: rgba(31, 41, 51, 0.25);
+}
+
+.notice {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-left: 4px solid var(--danger-2);
+  background: rgba(220, 38, 38, 0.08);
+  color: #374151;
+  font-size: 14px;
+}
+
+.num {
+  background: #eef2f7;
+  color: #111827;
+  border: 1px solid var(--line);
+}
+
+h2 {
+  color: #111827;
+}
+
+label {
+  color: #374151;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: var(--text);
+  border-radius: 10px;
+  padding: 12px 13px;
+  font-size: 15px;
+  outline: none;
+  transition: border 0.15s ease, box-shadow 0.15s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af;
+}
+
+input:focus,
+textarea:focus {
+  border-color: rgba(220, 38, 38, 0.65);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.10);
+}
+
+.guide {
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  color: #374151;
+}
+
+.result {
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.result-head {
+  background: #f8fafc;
+  border-bottom: 1px solid var(--line);
+}
+
+.result-body {
+  color: #374151;
+}
+
+.checkline {
+  color: #475569;
+}
+
+.disclaimer {
+  color: #6b7280;
+}
+    .page {
+      width: min(960px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    header {
+      border: 1px solid var(--line);
+      background: rgba(23, 26, 33, 0.92);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: "CONFIDENTIAL / EMERGENCY INTAKE";
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: rgba(255, 255, 255, 0.22);
+    }
+
+    .kicker {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(28px, 6vw, 46px);
+      letter-spacing: 0.02em;
+      line-height: 1.12;
+    }
+
+    .subtitle {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .notice {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-left: 4px solid var(--danger-2);
+      background: rgba(185, 28, 28, 0.12);
+      color: #f3f4f6;
+      font-size: 14px;
+    }
+
+    form {
+      margin-top: 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .section {
+      border: 1px solid var(--line);
+      background: rgba(23, 26, 33, 0.92);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .section-title {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .num {
+      display: inline-grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: var(--panel-2);
+      color: var(--white);
+      font-size: 12px;
+      border: 1px solid var(--line);
+      flex: 0 0 auto;
+    }
+
+    h2 {
+      font-size: 17px;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 0 0 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: #d1d5db;
+      margin-bottom: 6px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #0d0f14;
+      color: var(--text);
+      border-radius: 10px;
+      padding: 12px 13px;
+      font-size: 15px;
+      outline: none;
+      transition: border 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: rgba(239, 68, 68, 0.72);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .role-grid,
+    .evidence-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .role-row,
+    .evidence-row {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: minmax(120px, 0.8fr) minmax(180px, 1.4fr);
+      align-items: start;
+    }
+
+    .evidence-row {
+      grid-template-columns: minmax(160px, 1fr) minmax(220px, 1.4fr);
+    }
+
+    .guide {
+      margin: 12px 0;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: #d1d5db;
+      font-size: 13px;
+    }
+
+    .guide ul {
+      margin: 6px 0 0 18px;
+      padding: 0;
+    }
+
+    .guide li {
+      margin: 2px 0;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid var(--line);
+      background: rgba(23, 26, 33, 0.92);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    button {
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 13px 22px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: white;
+      background: linear-gradient(180deg, #dc2626, #991b1b);
+      box-shadow: 0 12px 22px rgba(185, 28, 28, 0.26);
+      transition: transform 0.12s ease, opacity 0.12s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    button.secondary {
+      background: #2b303b;
+      box-shadow: none;
+      color: #d1d5db;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 12px;
+      max-width: 520px;
+    }
+
+    .result {
+      display: none;
+      margin-top: 18px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(23, 26, 33, 0.96);
+      overflow: hidden;
+    }
+
+    .result.active {
+      display: block;
+    }
+
+    .result-head {
+      padding: 14px 16px;
+      background: #10131a;
+      border-bottom: 1px solid var(--line);
+      font-weight: 700;
+    }
+
+    .result-body {
+      padding: 16px;
+      color: #e5e7eb;
+    }
+
+    .checkline {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+      color: #cbd5e1;
+      margin: 8px 0;
+    }
+
+    .ok {
+      color: var(--ok);
+    }
+
+    .ng {
+      color: var(--warn);
+    }
+
+    .accepted {
+      border-color: rgba(34, 197, 94, 0.45);
+    }
+
+    .rejected {
+      border-color: rgba(245, 158, 11, 0.45);
+    }
+
+    .accepted .result-head {
+      color: #86efac;
+    }
+
+    .rejected .result-head {
+      color: #fcd34d;
+    }
+
+    .disclaimer {
+      margin-top: 22px;
+      text-align: center;
+      color: #7d8592;
+      font-size: 12px;
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        width: min(100% - 20px, 960px);
+        padding-top: 16px;
+      }
+
+      header,
+      .section,
+      .actions {
+        border-radius: 12px;
+      }
+
+      header::before {
+        display: none;
+      }
+
+      .grid-2,
+      .role-row,
+      .evidence-row {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        align-items: stretch;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div class="kicker">HAMAMATSU CHUO-KITA POLICE / REPORT INTAKE</div>
+      <h1>緊急通報書 作成フォーム</h1>
+      <p class="subtitle">浜松中央北署　野上孝明 宛</p>
+      <div class="notice">
+        あなたが確認した情報をもとに、緊急通報書を作成してください。内容に不足がある場合、通報は受理されません。<br />
+        「誰を」「どこで」「誰から」「何の危険から」守る必要があるのかを明確にしてください。
+      </div>
+    </header>
+
+    <form id="reportForm" autocomplete="off">
+      <section class="section">
+        <div class="section-title"><span class="num">1</span><h2>通報件名</h2></div>
+        <p class="hint">この通報が何に関するものか、あなたの判断で件名をつけてください。</p>
+        <input id="subject" name="subject" type="text" placeholder="例：朝倉澪さんへの現在進行中の口封じ計画について" />
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span class="num">2</span><h2>緊急保護対象</h2></div>
+        <div class="grid-2">
+          <div>
+            <label for="targetName">今すぐ保護すべき人物</label>
+            <input id="targetName" name="targetName" type="text" placeholder="氏名" />
+          </div>
+          <div>
+            <label for="targetPlace">現在いると考えられる場所</label>
+            <input id="targetPlace" name="targetPlace" type="text" placeholder="施設名・場所" />
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span class="num">3</span><h2>現在進行中の危険</h2></div>
+        <p class="hint">保護対象に迫っている危険を、具体的に説明してください。</p>
+        <textarea id="danger" name="danger" placeholder="例：朝倉澪さんは現在、城南記念総合病院に入院しており、病院側による記録改ざん、再処置、口封じの対象になっている可能性があります。"></textarea>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span class="num">4</span><h2>関与している人物</h2></div>
+        <p class="hint">関与していると考えられる人物と、それぞれの役割を記入してください。</p>
+        <div class="role-grid">
+          <div class="role-row">
+            <input id="person1" type="text" placeholder="氏名" />
+            <input id="role1" type="text" placeholder="役割・関与内容" />
+          </div>
+          <div class="role-row">
+            <input id="person2" type="text" placeholder="氏名" />
+            <input id="role2" type="text" placeholder="役割・関与内容" />
+          </div>
+          <div class="role-row">
+            <input id="person3" type="text" placeholder="氏名" />
+            <input id="role3" type="text" placeholder="役割・関与内容" />
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span class="num">5</span><h2>通報根拠</h2></div>
+        <p class="hint">確認した証拠と、その証拠が何を示しているかを記入してください。</p>
+        <div class="evidence-grid">
+          <div class="evidence-row">
+            <input id="evidence1" type="text" placeholder="証拠名" />
+            <input id="meaning1" type="text" placeholder="その証拠が示すこと" />
+          </div>
+          <div class="evidence-row">
+            <input id="evidence2" type="text" placeholder="証拠名" />
+            <input id="meaning2" type="text" placeholder="その証拠が示すこと" />
+          </div>
+          <div class="evidence-row">
+            <input id="evidence3" type="text" placeholder="証拠名" />
+            <input id="meaning3" type="text" placeholder="その証拠が示すこと" />
+          </div>
+          <div class="evidence-row">
+            <input id="evidence4" type="text" placeholder="証拠名" />
+            <input id="meaning4" type="text" placeholder="その証拠が示すこと" />
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span class="num">6</span><h2>警察に求める対応</h2></div>
+        <p class="hint">最優先で実行してほしい対応を記入してください。</p>
+        <textarea id="request" name="request" placeholder="例：朝倉澪さんの緊急保護、病室周辺の確認、関係者の身柄確保、病院記録の保全をお願いします。"></textarea>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span class="num">7</span><h2>最終通報文</h2></div>
+        <div class="guide">
+          以下を必ず含めてください。
+          <ul>
+            <li>誰を保護する必要があるか</li>
+            <li>どこで危険が起きているか</li>
+            <li>誰が関与しているか</li>
+            <li>どの証拠を確認したか</li>
+            <li>警察に何をしてほしいか</li>
+          </ul>
+        </div>
+        <textarea id="finalText" name="finalText" placeholder="通報文をここに記入してください。"></textarea>
+      </section>
+
+      <div class="actions">
+        <div class="small">
+          送信内容は、保護対象・現在地・関係者・危険内容・証拠・要請内容をもとに照合されます。
+        </div>
+        <div>
+          <button type="button" class="secondary" id="fillSample">記入例を入れる</button>
+          <button type="submit">この内容で緊急通報する</button>
+        </div>
+      </div>
+    </form>
+
+    <section id="result" class="result" aria-live="polite">
+      <div id="resultHead" class="result-head"></div>
+      <div id="resultBody" class="result-body"></div>
+    </section>
+
+    <p class="disclaimer">このページはフィクション作品内の演出です。実在の警察・病院・学校・人物とは関係ありません。</p>
+  </main>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    const normalize = (text) => {
+      return (text || "")
+        .toLowerCase()
+        .replace(/\s+/g, "")
+        .replace(/[Ａ-Ｚａ-ｚ０-９]/g, (s) => String.fromCharCode(s.charCodeAt(0) - 0xFEE0));
+    };
+
+    const hasAny = (text, words) => {
+      const t = normalize(text);
+      return words.some((word) => t.includes(normalize(word)));
+    };
+
+    const getAllText = () => {
+      const ids = [
+        "subject", "targetName", "targetPlace", "danger",
+        "person1", "role1", "person2", "role2", "person3", "role3",
+        "evidence1", "meaning1", "evidence2", "meaning2", "evidence3", "meaning3", "evidence4", "meaning4",
+        "request", "finalText"
+      ];
+      return ids.map((id) => $(id).value).join("\n");
+    };
+
+    const checks = [
+      {
+        label: "保護対象：朝倉澪",
+        test: (text) => hasAny(text, ["朝倉澪", "澪"]),
+        error: "保護対象が特定できません。現在危険な状態にある人物名を明記してください。"
+      },
+      {
+        label: "現在地：城南記念総合病院",
+        test: (text) => hasAny(text, ["城南記念総合病院", "城南記念病院", "城南病院"]),
+        error: "現在地が特定できません。保護対象がいる施設名を明記してください。"
+      },
+      {
+        label: "関与人物：黒崎恒一郎",
+        test: (text) => hasAny(text, ["黒崎恒一郎", "恒一郎"]),
+        error: "隠蔽を主導した人物の情報が不足しています。"
+      },
+      {
+        label: "関与人物：黒崎蓮司",
+        test: (text) => hasAny(text, ["黒崎蓮司", "蓮司"]),
+        error: "朝倉澪への加害・実行役に関する情報が不足しています。"
+      },
+      {
+        label: "関与人物：藍沢晋作",
+        test: (text) => hasAny(text, ["藍沢晋作", "藍沢"]),
+        error: "医療記録・再処置に関与した人物の情報が不足しています。"
+      },
+      {
+        label: "危険内容：記録改ざん・再処置・口封じ",
+        test: (text) => hasAny(text, ["記録改ざん", "改ざん", "再処置", "口封じ", "危害", "再加害"]),
+        error: "緊急性が確認できません。現在進行中の危険内容を明記してください。"
+      },
+      {
+        label: "要請内容：緊急保護・確認・捜査",
+        test: (text) => hasAny(text, ["緊急保護", "保護", "確認", "捜査", "身柄", "確保", "保全"]),
+        error: "警察に求める対応が不足しています。保護・確認・捜査などの要請を明記してください。"
+      },
+      {
+        label: "証拠：成瀬栞の死亡事故または医療事故",
+        test: (text) => hasAny(text, ["成瀬栞", "栞", "医療事故", "誤った点滴", "アナフィラキシー"]),
+        error: "通報根拠が不足しています。成瀬栞さんの死亡事故に関する証拠を記入してください。"
+      }
+    ];
+
+    function renderResult(passed, failed) {
+      const result = $("result");
+      const head = $("resultHead");
+      const body = $("resultBody");
+
+      result.className = "result active " + (failed.length === 0 ? "accepted" : "rejected");
+
+      if (failed.length === 0) {
+        head.textContent = "通報は受理されました";
+        body.innerHTML = `
+          <div class="checkline ok">送信内容を照合しています…… OK</div>
+          <div class="checkline ok">証拠記録を確認中…… OK</div>
+          <div class="checkline ok">関係者名を照合中…… OK</div>
+          <div class="checkline ok">緊急性：高</div>
+          <p>担当：浜松中央北署　野上孝明</p>
+          <p>現場確認を開始します。</p>
+          <p class="small">※この後、エピローグニュースページへ遷移させる想定です。</p>
+        `;
+      } else {
+        head.textContent = "情報が不足しています";
+        const failedLines = failed.map((item) => `<div class="checkline ng">・${item.error}</div>`).join("");
+        body.innerHTML = `
+          <p>通報内容の緊急性または根拠が確認できませんでした。以下の項目を再確認してください。</p>
+          ${failedLines}
+        `;
+      }
+
+      result.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    $("reportForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const text = getAllText();
+      const passed = [];
+      const failed = [];
+
+      checks.forEach((check) => {
+        if (check.test(text)) passed.push(check);
+        else failed.push(check);
+      });
+
+      renderResult(passed, failed);
+    });
+
+    $("fillSample").addEventListener("click", () => {
+      $("subject").value = "朝倉澪さんへの現在進行中の口封じ計画について";
+      $("targetName").value = "朝倉澪";
+      $("targetPlace").value = "城南記念総合病院";
+      $("danger").value = "朝倉澪さんは現在、城南記念総合病院に入院しており、病院側による記録改ざん、再処置、口封じの対象になっている可能性があります。";
+      $("person1").value = "黒崎恒一郎";
+      $("role1").value = "成瀬栞さんの医療事故の隠蔽を主導し、朝倉澪さんへの圧力にも関与している人物。";
+      $("person2").value = "黒崎蓮司";
+      $("role2").value = "黒崎恒一郎の指示を受け、朝倉澪さんへの加害・脅迫を実行した人物。";
+      $("person3").value = "藍沢晋作";
+      $("role3").value = "成瀬栞さんの誤った点滴、記録改ざん、再処置指示に関与している医師。";
+      $("evidence1").value = "成瀬栞のカルテ・死亡原因記録";
+      $("meaning1").value = "誤った点滴とアナフィラキシーショックによる死亡の可能性。";
+      $("evidence2").value = "賠償金・病院損失に関する内部ログ";
+      $("meaning2").value = "病院側が謝罪や真相究明より隠蔽を優先していたこと。";
+      $("evidence3").value = "黒崎恒一郎から黒崎蓮司への指示ログ";
+      $("meaning3").value = "澪への加害が偶発的ないじめではなく、黒崎側の指示だったこと。";
+      $("evidence4").value = "藍沢晋作への司令書";
+      $("meaning4").value = "記録改ざん・再処置・口封じが現在進行中であること。";
+      $("request").value = "朝倉澪さんの緊急保護、病室周辺の確認、関係者の身柄確保、病院記録の保全をお願いします。";
+      $("finalText").value = "朝倉澪さんが現在、城南記念総合病院で危険な状態にあります。成瀬栞さんの死亡事故について、藍沢晋作医師による誤った点滴と記録改ざんの疑いがあります。また、黒崎恒一郎氏が事故の隠蔽を主導し、黒崎蓮司氏に澪さんへの加害を指示していた記録を確認しました。さらに、藍沢晋作医師への司令書から、澪さんに対する記録改ざん・再処置・口封じが現在進行中である可能性があります。至急、朝倉澪さんの保護、病室周辺の確認、関係者の身柄確保、病院記録の保全をお願いします。";
+    });
+  </script>
+</body>
+</html>
