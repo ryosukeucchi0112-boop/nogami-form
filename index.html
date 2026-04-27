@@ -280,6 +280,32 @@
         flex-direction: column;
       }
     }
+    input[type="file"] {
+  width: 100%;
+  border: 1px dashed rgba(148, 163, 184, 0.38);
+  background: rgba(2, 6, 23, 0.62);
+  color: #cbd5e1;
+  border-radius: 10px;
+  padding: 13px;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+input[type="file"]::file-selector-button {
+  margin-right: 12px;
+  border: 0;
+  border-radius: 8px;
+  padding: 9px 12px;
+  background: #1f2937;
+  color: #e5e7eb;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: #374151;
+}
   </style>
 </head>
 
@@ -303,13 +329,14 @@
           推測ではなく、確認した資料に基づいて入力してください。
         </div>
 
-        <form
-          name="emergency-report"
-          method="POST"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-          id="reportForm"
-        >
+       <form
+  name="emergency-report"
+  method="POST"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  enctype="multipart/form-data"
+  id="reportForm"
+>
           <input type="hidden" name="form-name" value="emergency-report" />
 
           <p class="honeypot">
@@ -460,14 +487,18 @@
             </div>
 
             <div class="field">
-              <label for="evidence">通報根拠</label>
-              <textarea
-                id="evidence"
-                name="通報根拠"
-                placeholder="確認した資料名・記載内容・そこから判断できる事実を記入してください"
-                required
-              ></textarea>
-            </div>
+  <label for="evidenceFile">資料提出・スクリーンショット提出</label>
+  <input
+    id="evidenceFile"
+    name="提出資料"
+    type="file"
+    accept="image/*,.pdf,.doc,.docx,.txt"
+    multiple
+  />
+  <p class="hint">
+    ※確認した証拠資料、スクリーンショット、PDF、メモファイルなどを提出できます。
+  </p>
+</div>
 
             <div class="field">
               <label for="request">警察に求める対応</label>
@@ -562,18 +593,13 @@
 
       errorBox.style.display = "none";
 
-      const formData = new FormData(form);
-      const body = {};
-      formData.forEach((value, key) => {
-        body[key] = value;
-      });
+    const formData = new FormData(form);
 
-      try {
-        await fetch("/", {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: encode(body)
-        });
+try {
+  await fetch("/", {
+    method: "POST",
+    body: formData
+  });
 
         formScreen.style.display = "none";
         successScreen.style.display = "block";
