@@ -1,398 +1,283 @@
-z<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>浜松中央北署｜緊急通報受付端末</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <title>浜松中央北署｜緊急通報フォーム</title>
 
   <style>
-    :root {
-      --bg: #0b0f14;
-      --bg2: #111827;
-      --card: #121923;
-      --card2: #0f1720;
-      --line: rgba(148, 163, 184, 0.22);
-      --text: #e5e7eb;
-      --muted: #94a3b8;
-      --subtle: #64748b;
-      --blue: #1d4ed8;
-      --blue2: #60a5fa;
-      --red: #dc2626;
-      --red2: #f87171;
-      --input: #0a1018;
-      --focus: rgba(96, 165, 250, 0.35);
-    }
-
     * {
       box-sizing: border-box;
-    }
-
-    html {
-      background: var(--bg);
     }
 
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(29, 78, 216, 0.18), transparent 34%),
-        radial-gradient(circle at bottom right, rgba(127, 29, 29, 0.12), transparent 35%),
-        linear-gradient(180deg, #0b0f14 0%, #111827 100%);
-      line-height: 1.7;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 28px 28px;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent 80%);
+        radial-gradient(circle at top, rgba(31, 41, 55, 0.7), transparent 45%),
+        linear-gradient(180deg, #111827 0%, #0b0f14 100%);
+      color: #e5e7eb;
+      font-family: "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      letter-spacing: 0.02em;
     }
 
     .page {
-      width: min(980px, calc(100% - 28px));
+      width: min(920px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 32px 0 48px;
+      padding: 40px 0 64px;
     }
 
-    .terminal-header {
-      border: 1px solid var(--line);
-      background: rgba(15, 23, 42, 0.7);
-      backdrop-filter: blur(12px);
-      border-radius: 18px 18px 0 0;
-      padding: 18px 20px;
+    .terminal {
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      background: rgba(15, 23, 42, 0.92);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .topbar {
+      padding: 14px 20px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+      background: rgba(2, 6, 23, 0.88);
       display: flex;
       justify-content: space-between;
       gap: 16px;
-      align-items: flex-start;
-    }
-
-    .system-label {
-      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      color: var(--blue2);
-      text-transform: uppercase;
-    }
-
-    .status {
-      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 11px;
-      color: var(--muted);
-      text-align: right;
-      white-space: nowrap;
-    }
-
-    .status strong {
-      color: var(--red2);
-      font-weight: 700;
-    }
-
-    .card {
-      border: 1px solid var(--line);
-      border-top: 0;
-      background: linear-gradient(180deg, rgba(18, 25, 35, 0.98), rgba(10, 16, 24, 0.98));
-      box-shadow: 0 24px 90px rgba(0, 0, 0, 0.45);
-      border-radius: 0 0 18px 18px;
-      overflow: hidden;
-    }
-
-    .hero {
-      padding: 30px 24px 26px;
-      border-bottom: 1px solid var(--line);
-      background:
-        linear-gradient(90deg, rgba(29, 78, 216, 0.16), transparent),
-        rgba(255, 255, 255, 0.015);
+      align-items: center;
+      font-size: 12px;
+      color: #94a3b8;
     }
 
     .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid rgba(248, 113, 113, 0.35);
       color: #fecaca;
-      background: rgba(127, 29, 29, 0.18);
+      border: 1px solid rgba(248, 113, 113, 0.45);
+      background: rgba(127, 29, 29, 0.24);
+      padding: 4px 8px;
       border-radius: 999px;
-      padding: 5px 10px;
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 14px;
+      font-size: 11px;
+      white-space: nowrap;
     }
 
-    .badge::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      background: var(--red);
-      border-radius: 50%;
-      box-shadow: 0 0 16px rgba(220, 38, 38, 0.9);
+    .content {
+      padding: 28px;
     }
 
     h1 {
-      margin: 0;
-      font-size: clamp(26px, 4.8vw, 44px);
-      line-height: 1.18;
-      letter-spacing: 0.02em;
-      font-weight: 900;
-    }
-
-    .recipient {
-      margin: 12px 0 0;
-      color: #cbd5e1;
-      font-size: clamp(15px, 2vw, 18px);
+      margin: 0 0 8px;
+      font-size: clamp(24px, 4vw, 36px);
+      line-height: 1.25;
       font-weight: 700;
     }
 
-    .description {
-      margin: 18px 0 0;
-      color: var(--muted);
-      max-width: 760px;
+    .subtitle {
+      margin: 0 0 22px;
+      color: #94a3b8;
+      line-height: 1.8;
       font-size: 14px;
     }
 
-    .meta-grid {
-      margin-top: 20px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .meta {
-      border: 1px solid var(--line);
-      background: rgba(15, 23, 42, 0.65);
+    .notice {
+      border: 1px solid rgba(251, 191, 36, 0.32);
+      background: rgba(120, 53, 15, 0.18);
+      color: #fde68a;
+      padding: 14px 16px;
       border-radius: 12px;
-      padding: 10px 12px;
-      min-width: 0;
-    }
-
-    .meta span {
-      display: block;
-      color: var(--subtle);
-      font-family: "JetBrains Mono", ui-monospace, monospace;
-      font-size: 10px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .meta strong {
-      display: block;
-      color: #e2e8f0;
       font-size: 13px;
-      margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      line-height: 1.7;
+      margin-bottom: 26px;
     }
 
     form {
-      padding: 24px;
-    }
-
-    .hidden {
-      display: none !important;
-      visibility: hidden;
-      opacity: 0;
-      height: 0;
-      width: 0;
-      overflow: hidden;
-      position: absolute;
-      left: -9999px;
-    }
-
-    .field {
       display: grid;
-      grid-template-columns: 74px 1fr;
-      gap: 16px;
-      padding: 22px 0;
-      border-bottom: 1px solid var(--line);
+      gap: 22px;
     }
 
-    .field:last-of-type {
-      border-bottom: 0;
+    .section {
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      background: rgba(15, 23, 42, 0.66);
+      border-radius: 14px;
+      padding: 18px;
     }
 
-    .num {
-      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      color: var(--blue2);
-      font-size: 18px;
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 15px;
       font-weight: 700;
-      letter-spacing: 0.08em;
-      padding-top: 2px;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #f87171;
+      box-shadow: 0 0 14px rgba(248, 113, 113, 0.9);
     }
 
     label {
       display: block;
-      font-weight: 800;
-      font-size: 16px;
       margin-bottom: 8px;
-      color: #f8fafc;
+      color: #cbd5e1;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .field {
+      margin-top: 14px;
+    }
+
+    input[type="text"],
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      background: rgba(2, 6, 23, 0.62);
+      color: #e5e7eb;
+      border-radius: 10px;
+      padding: 12px 13px;
+      font: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus,
+    select:focus {
+      border-color: rgba(96, 165, 250, 0.72);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    .choices {
+      display: grid;
+      gap: 10px;
+    }
+
+    .choice {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 11px 12px;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 10px;
+      background: rgba(2, 6, 23, 0.34);
+      cursor: pointer;
+      color: #dbeafe;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .choice input {
+      margin-top: 3px;
+      accent-color: #ef4444;
     }
 
     .hint {
-      margin: 0 0 12px;
-      color: var(--subtle);
+      margin-top: 8px;
+      color: #64748b;
       font-size: 12px;
-    }
-
-    input,
-    textarea {
-      width: 100%;
-      border: 1px solid rgba(148, 163, 184, 0.28);
-      background: var(--input);
-      color: var(--text);
-      border-radius: 12px;
-      padding: 15px 15px;
-      font: inherit;
-      font-size: 16px;
-      outline: none;
-      transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-    }
-
-    textarea {
-      min-height: 132px;
-      resize: vertical;
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: rgba(148, 163, 184, 0.52);
-    }
-
-    input:focus,
-    textarea:focus {
-      border-color: rgba(96, 165, 250, 0.86);
-      box-shadow: 0 0 0 4px var(--focus);
-      background: #080e15;
-    }
-
-    .final textarea {
-      min-height: 190px;
+      line-height: 1.6;
     }
 
     .actions {
-      margin-top: 26px;
-      padding: 20px;
-      border: 1px solid rgba(220, 38, 38, 0.24);
-      background: rgba(127, 29, 29, 0.08);
-      border-radius: 16px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-    }
-
-    .warning {
-      margin: 0;
-      color: #cbd5e1;
-      font-size: 13px;
-    }
-
-    .warning strong {
-      color: #fecaca;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 4px;
     }
 
     button {
-      appearance: none;
-      border: 1px solid rgba(248, 113, 113, 0.55);
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 15px 18px;
       background: linear-gradient(180deg, #991b1b, #7f1d1d);
       color: #fff;
-      border-radius: 12px;
-      padding: 15px 20px;
-      font-family: "Noto Sans JP", sans-serif;
       font-size: 15px;
-      font-weight: 900;
+      font-weight: 700;
       cursor: pointer;
-      min-width: 230px;
-      box-shadow: 0 14px 32px rgba(127, 29, 29, 0.38);
-      transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+      letter-spacing: 0.04em;
+      box-shadow: 0 16px 42px rgba(127, 29, 29, 0.35);
     }
 
     button:hover {
-      transform: translateY(-1px);
       filter: brightness(1.08);
-      box-shadow: 0 18px 42px rgba(127, 29, 29, 0.48);
     }
 
-    button:active {
-      transform: translateY(0);
+    .error {
+      display: none;
+      border: 1px solid rgba(248, 113, 113, 0.45);
+      background: rgba(127, 29, 29, 0.24);
+      color: #fecaca;
+      padding: 13px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .success {
+      display: none;
+      padding: 34px 28px;
+      text-align: left;
+    }
+
+    .success h2 {
+      margin: 0 0 12px;
+      color: #bbf7d0;
+      font-size: 26px;
+    }
+
+    .success p {
+      color: #cbd5e1;
+      line-height: 1.8;
+      margin: 0 0 14px;
+    }
+
+    .success-code {
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 10px;
+      background: rgba(2, 6, 23, 0.72);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      color: #86efac;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+    }
+
+    .hidden,
+    .honeypot {
+      display: none !important;
     }
 
     .fiction {
-      margin: 18px 0 0;
-      color: #94a3b8;
-      font-size: 12px;
+      margin-top: 20px;
+      color: #64748b;
       text-align: center;
-      opacity: 0.85;
+      font-size: 11px;
+      line-height: 1.7;
     }
 
-    .fiction strong {
-      color: #cbd5e1;
-      font-weight: 700;
-    }
-
-    @media (max-width: 720px) {
+    @media (max-width: 640px) {
       .page {
-        width: min(100% - 20px, 980px);
-        padding-top: 18px;
+        width: min(100% - 20px, 920px);
+        padding: 20px 0 40px;
       }
 
-      .terminal-header {
-        flex-direction: column;
-        border-radius: 14px 14px 0 0;
-      }
-
-      .status {
-        text-align: left;
-        white-space: normal;
-      }
-
-      .hero,
-      form {
+      .content {
         padding: 20px;
       }
 
-      .meta-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .field {
-        grid-template-columns: 1fr;
-        gap: 6px;
-        padding: 20px 0;
-      }
-
-      .num {
-        font-size: 15px;
-      }
-
-      input,
-      textarea {
-        font-size: 16px;
-        padding: 14px;
-      }
-
-      textarea {
-        min-height: 150px;
-      }
-
-      .actions {
+      .topbar {
+        align-items: flex-start;
         flex-direction: column;
-        align-items: stretch;
-      }
-
-      button {
-        width: 100%;
-        min-width: 0;
       }
     }
   </style>
@@ -400,176 +285,304 @@ z<!DOCTYPE html>
 
 <body>
   <main class="page">
-    <header class="terminal-header">
-      <div class="system-label">HAMAMATSU CHUO-KITA POLICE / REPORT INTAKE</div>
-      <div class="status">
-        STATUS: <strong>URGENT INTAKE</strong><br>
-        CASE REF: HCKP-INTAKE-0417
+    <section class="terminal" id="formScreen">
+      <div class="topbar">
+        <span>HAMAMATSU CENTRAL NORTH POLICE / EMERGENCY INTAKE TERMINAL</span>
+        <span class="badge">URGENT REPORT</span>
       </div>
-    </header>
 
-    <section class="card">
-      <div class="hero">
-        <div class="badge">緊急通報受付端末</div>
+      <div class="content">
         <h1>警察への緊急通報フォーム</h1>
-        <p class="recipient">浜松中央北署　野上孝明 宛</p>
-        <p class="description">
-          入手した情報・証拠・現在進行中の危険を整理し、通報内容として送信してください。
-          内容が不足している場合、現場対応が遅れる可能性があります。
+        <p class="subtitle">
+          取得した資料を整理し、現在進行中の危険について通報してください。<br>
+          内容に重大な不足がある場合、送信は受理されません。
         </p>
 
-        <div class="meta-grid" aria-label="通報受付情報">
-          <div class="meta">
-            <span>Destination</span>
-            <strong>浜松中央北署</strong>
-          </div>
-          <div class="meta">
-            <span>Recipient</span>
-            <strong>野上孝明</strong>
-          </div>
-          <div class="meta">
-            <span>Priority</span>
-            <strong>Immediate Protection</strong>
-          </div>
-        </div>
-      </div>
-
-      <form name="emergency-report" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="emergency-report" />
-
-        <p class="hidden">
-          <label>Don’t fill this out: <input name="bot-field" /></label>
-        </p>
-
-        <div class="field">
-          <div class="num">01</div>
-          <div>
-            <label for="subject">通報件名</label>
-            <p class="hint">事件の概要が一目で分かる件名を入力してください。</p>
-            <input
-              id="subject"
-              name="通報件名"
-              type="text"
-              required
-              placeholder="例：朝倉澪さんへの口封じ計画および医療事故隠蔽に関する緊急通報"
-            />
-          </div>
+        <div class="notice">
+          このフォームは、保護対象・関係者・危険内容・証拠根拠が一致している場合のみ送信できます。
+          推測ではなく、確認した資料に基づいて入力してください。
         </div>
 
-        <div class="field">
-          <div class="num">02</div>
-          <div>
-            <label for="target">緊急保護対象</label>
-            <p class="hint">今すぐ保護が必要な人物名を入力してください。</p>
-            <input
-              id="target"
-              name="緊急保護対象"
-              type="text"
-              required
-              placeholder="例：朝倉澪。私立星浜学園高等部の生徒。現在、意識不明の状態で入院中。"
-            />
-          </div>
-        </div>
+        <form
+          name="emergency-report"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          id="reportForm"
+        >
+          <input type="hidden" name="form-name" value="emergency-report" />
 
-        <div class="field">
-          <div class="num">03</div>
-          <div>
-            <label for="location">現在いると考えられる場所</label>
-            <p class="hint">保護対象がいる可能性の高い場所を入力してください。</p>
-            <input
-              id="location"
-              name="現在いると考えられる場所"
-              type="text"
-              required
-              placeholder="例：城南記念総合病院。搬送後、同院内で管理されている可能性が高い。"
-            />
-          </div>
-        </div>
-
-        <div class="field">
-          <div class="num">04</div>
-          <div>
-            <label for="danger">現在進行中の危険</label>
-            <p class="hint">今まさに何が起きようとしているのかを具体的に記入してください。</p>
-            <textarea
-              id="danger"
-              name="現在進行中の危険"
-              required
-              placeholder="例：病院側で診療記録の改ざん、再処置、口封じが進められている疑いがあります。朝倉澪さんは意識不明で抵抗できず、関係者による再加害の危険があります。"
-            ></textarea>
-          </div>
-        </div>
-
-        <div class="field">
-          <div class="num">05</div>
-          <div>
-            <label for="people">関与している人物</label>
-            <p class="hint">黒幕・実行役・医療事故当事者など、関係者名を整理してください。</p>
-            <textarea
-              id="people"
-              name="関与している人物"
-              required
-              placeholder="例：黒崎恒一郎、黒崎蓮司、藍沢晋作。黒崎恒一郎は隠蔽の主導者、黒崎蓮司は朝倉澪さんへの加害に関与、藍沢晋作は成瀬栞さんの死亡事故および記録改ざんに関与している疑いがあります。"
-            ></textarea>
-          </div>
-        </div>
-
-        <div class="field">
-          <div class="num">06</div>
-          <div>
-            <label for="evidence">通報根拠</label>
-            <p class="hint">確認した証拠やログを、できるだけ順番に整理してください。</p>
-            <textarea
-              id="evidence"
-              name="通報根拠"
-              required
-              placeholder="例：成瀬栞さんの死亡原因メモ、病院側の賠償・評判を優先する内部ログ、黒崎恒一郎から黒崎蓮司への指示ログ、藍沢晋作への記録改ざん・再処置指示書を確認しました。"
-            ></textarea>
-          </div>
-        </div>
-
-        <div class="field">
-          <div class="num">07</div>
-          <div>
-            <label for="request">警察に求める対応</label>
-            <p class="hint">警察に何をしてほしいのかを明確に入力してください。</p>
-            <textarea
-              id="request"
-              name="警察に求める対応"
-              required
-              placeholder="例：城南記念総合病院への即時臨場、朝倉澪さんの身柄保護、関係者の接触禁止、医療記録と内部ログの保全、黒崎恒一郎・黒崎蓮司・藍沢晋作への事情聴取を求めます。"
-            ></textarea>
-          </div>
-        </div>
-
-        <div class="field final">
-          <div class="num">08</div>
-          <div>
-            <label for="final-report">最終通報文</label>
-            <p class="hint">ここに、警察へ送る最終的な通報文を自分の言葉でまとめてください。</p>
-            <textarea
-              id="final-report"
-              name="最終通報文"
-              required
-              placeholder="例：浜松中央北署 野上孝明様。朝倉澪さんの生命に危険が迫っている可能性があります。私は複数の証拠から、成瀬栞さんの死亡事故、病院側の隠蔽、黒崎恒一郎らによる朝倉澪さんへの加害指示、現在進行中の記録改ざん・口封じ計画を確認しました。至急、城南記念総合病院へ向かい、朝倉澪さんの保護と証拠保全をお願いします。"
-            ></textarea>
-          </div>
-        </div>
-
-        <div class="actions">
-          <p class="warning">
-            <strong>送信前確認：</strong>
-            通報対象、現在地、関与人物、根拠、求める対応が入力されていることを確認してください。
+          <p class="honeypot">
+            <label>Don’t fill this out: <input name="bot-field" /></label>
           </p>
-          <button type="submit">この内容で緊急通報する</button>
-        </div>
-      </form>
+
+          <div class="section">
+            <p class="section-title">通報概要</p>
+
+            <div class="field">
+              <label for="subject">通報件名</label>
+              <input
+                id="subject"
+                name="通報件名"
+                type="text"
+                placeholder="例：入院患者に対する記録改ざんおよび危害計画の通報"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="section">
+            <p class="section-title">判定項目</p>
+
+            <div class="field">
+              <label>1. 今すぐ保護すべき人物</label>
+              <div class="choices">
+                <label class="choice">
+                  <input type="radio" name="保護対象" value="朝倉澪" required />
+                  朝倉 澪
+                </label>
+                <label class="choice">
+                  <input type="radio" name="保護対象" value="成瀬栞" />
+                  成瀬 栞
+                </label>
+                <label class="choice">
+                  <input type="radio" name="保護対象" value="三浦さやか" />
+                  三浦 さやか
+                </label>
+                <label class="choice">
+                  <input type="radio" name="保護対象" value="不明" />
+                  不明
+                </label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>2. 医療事故に直接関与した人物</label>
+              <div class="choices">
+                <label class="choice">
+                  <input type="radio" name="医療事故関与者" value="藍沢晋作" required />
+                  藍沢 晋作
+                </label>
+                <label class="choice">
+                  <input type="radio" name="医療事故関与者" value="黒崎蓮司" />
+                  黒崎 蓮司
+                </label>
+                <label class="choice">
+                  <input type="radio" name="医療事故関与者" value="野上孝明" />
+                  野上 孝明
+                </label>
+                <label class="choice">
+                  <input type="radio" name="医療事故関与者" value="SUZUKI" />
+                  SUZUKI
+                </label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>3. 隠蔽・加害指示を出した人物</label>
+              <div class="choices">
+                <label class="choice">
+                  <input type="radio" name="指示者" value="黒崎恒一郎" required />
+                  黒崎 恒一郎
+                </label>
+                <label class="choice">
+                  <input type="radio" name="指示者" value="黒崎蓮司" />
+                  黒崎 蓮司
+                </label>
+                <label class="choice">
+                  <input type="radio" name="指示者" value="藍沢晋作" />
+                  藍沢 晋作
+                </label>
+                <label class="choice">
+                  <input type="radio" name="指示者" value="三浦さやか" />
+                  三浦 さやか
+                </label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>4. 実行役として動いた人物</label>
+              <div class="choices">
+                <label class="choice">
+                  <input type="radio" name="実行役" value="黒崎蓮司" required />
+                  黒崎 蓮司
+                </label>
+                <label class="choice">
+                  <input type="radio" name="実行役" value="黒崎恒一郎" />
+                  黒崎 恒一郎
+                </label>
+                <label class="choice">
+                  <input type="radio" name="実行役" value="成瀬栞" />
+                  成瀬 栞
+                </label>
+                <label class="choice">
+                  <input type="radio" name="実行役" value="野上孝明" />
+                  野上 孝明
+                </label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>5. 現在進行中の危険</label>
+              <div class="choices">
+                <label class="choice">
+                  <input type="radio" name="現在進行中の危険" value="昏睡中の患者への再加害・記録改ざん" required />
+                  昏睡中の患者への再加害・記録改ざん
+                </label>
+                <label class="choice">
+                  <input type="radio" name="現在進行中の危険" value="過去の熱中症事故" />
+                  過去の熱中症事故
+                </label>
+                <label class="choice">
+                  <input type="radio" name="現在進行中の危険" value="記者への取材妨害" />
+                  記者への取材妨害
+                </label>
+                <label class="choice">
+                  <input type="radio" name="現在進行中の危険" value="学校行事の中止" />
+                  学校行事の中止
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <p class="section-title">自由記述</p>
+
+            <div class="field">
+              <label for="location">現在いると考えられる場所</label>
+              <input
+                id="location"
+                name="現在地"
+                type="text"
+                placeholder="証拠から推定できる現在地を記入してください"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label for="evidence">通報根拠</label>
+              <textarea
+                id="evidence"
+                name="通報根拠"
+                placeholder="確認した資料名・記載内容・そこから判断できる事実を記入してください"
+                required
+              ></textarea>
+            </div>
+
+            <div class="field">
+              <label for="request">警察に求める対応</label>
+              <textarea
+                id="request"
+                name="警察に求める対応"
+                placeholder="最優先で実行すべき対応を、緊急性の高い順に記入してください"
+                required
+              ></textarea>
+            </div>
+
+            <div class="field">
+              <label for="finalReport">最終通報文</label>
+              <textarea
+                id="finalReport"
+                name="最終通報文"
+                placeholder="ここに、通報内容を文章としてまとめてください。保護対象、現在地、関係者、危険内容、証拠、警察への要請を必ず含めてください。"
+                required
+              ></textarea>
+              <p class="hint">
+                ※自由記述欄は、受理判断の補助資料として扱われます。
+              </p>
+            </div>
+          </div>
+
+          <div class="actions">
+            <div class="error" id="errorBox">
+              情報が不足、または証拠内容と一致していません。保護対象・関与人物・現在進行中の危険を再確認してください。
+            </div>
+
+            <button type="submit">この内容で緊急通報する</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="terminal success" id="successScreen">
+      <h2>通報を受理しました</h2>
+      <p>
+        提出された内容は、浜松中央北署・野上孝明宛の緊急通報として記録されました。
+      </p>
+      <p>
+        保護対象の安全確認、関係者の所在確認、城南記念総合病院内の記録保全が開始されます。
+      </p>
+      <div class="success-code">
+        REPORT STATUS: ACCEPTED<br />
+        PRIORITY: URGENT<br />
+        CASE ROUTE: HCN-0417-MIO
+      </div>
     </section>
 
     <p class="fiction">
-      <strong>注意：</strong>
-      このページはフィクション作品内の演出です。実在の警察・病院・学校・人物とは関係ありません。
+      このページはフィクション作品内の演出ページです。実在の警察機関・医療機関・人物とは関係ありません。
     </p>
   </main>
+
+  <script>
+    const form = document.getElementById("reportForm");
+    const errorBox = document.getElementById("errorBox");
+    const formScreen = document.getElementById("formScreen");
+    const successScreen = document.getElementById("successScreen");
+
+    const correctAnswers = {
+      "保護対象": "朝倉澪",
+      "医療事故関与者": "藍沢晋作",
+      "指示者": "黒崎恒一郎",
+      "実行役": "黒崎蓮司",
+      "現在進行中の危険": "昏睡中の患者への再加害・記録改ざん"
+    };
+
+    function getSelectedValue(name) {
+      const selected = document.querySelector(`input[name="${name}"]:checked`);
+      return selected ? selected.value : "";
+    }
+
+    function encode(data) {
+      return new URLSearchParams(data).toString();
+    }
+
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const isCorrect = Object.entries(correctAnswers).every(([key, value]) => {
+        return getSelectedValue(key) === value;
+      });
+
+      if (!isCorrect) {
+        errorBox.style.display = "block";
+        errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+
+      errorBox.style.display = "none";
+
+      const formData = new FormData(form);
+      const body = {};
+      formData.forEach((value, key) => {
+        body[key] = value;
+      });
+
+      try {
+        await fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: encode(body)
+        });
+
+        formScreen.style.display = "none";
+        successScreen.style.display = "block";
+        successScreen.scrollIntoView({ behavior: "smooth", block: "start" });
+      } catch (error) {
+        errorBox.textContent = "送信処理中にエラーが発生しました。通信状況を確認して、もう一度送信してください。";
+        errorBox.style.display = "block";
+      }
+    });
+  </script>
 </body>
 </html>
