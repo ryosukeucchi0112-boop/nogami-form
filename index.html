@@ -550,85 +550,94 @@
       </div>
     </section>
 
-    <section class="terminal success" id="successScreen">
-      <h2>通報を受理しました</h2>
-      <p>
-        提出された内容は、浜松中央北署・野上孝明宛の緊急通報として記録されました。
-      </p>
-      <p>
-        保護対象の安全確認、関係者の所在確認、城南記念総合病院内の記録保全が開始されます。
-      </p>
-      <div class="success-code">
-        REPORT STATUS: ACCEPTED<br />
-        PRIORITY: URGENT<br />
-        CASE ROUTE: HCN-0417-MIO
-      </div>
-    </section>
+   <section class="terminal success" id="successScreen">
+  <h2>通報を受理しました</h2>
+  <p>
+    提出された内容は、浜松中央北署・野上孝明宛の緊急通報として記録されました。
+  </p>
+  <p>
+    保護対象の安全確認、関係者の所在確認、城南記念総合病院内の記録保全が開始されます。
+  </p>
+  <div class="success-code">
+    REPORT STATUS: ACCEPTED<br />
+    PRIORITY: URGENT<br />
+    CASE ROUTE: HCN-0417-MIO<br />
+    TRANSFER: ENDING SEQUENCE
+  </div>
+</section>
 
     <p class="fiction">
       このページはフィクション作品内の演出ページです。実在の警察機関・医療機関・人物とは関係ありません。
     </p>
   </main>
 
-  <script>
-    const form = document.getElementById("reportForm");
-    const errorBox = document.getElementById("errorBox");
-    const formScreen = document.getElementById("formScreen");
-    const successScreen = document.getElementById("successScreen");
+ <script>
+  const form = document.getElementById("reportForm");
+  const errorBox = document.getElementById("errorBox");
+  const formScreen = document.getElementById("formScreen");
+  const successScreen = document.getElementById("successScreen");
 
-    const correctAnswers = {
-      "保護対象": "朝倉澪",
-      "医療事故関与者": "藍沢晋作",
-      "指示者": "黒崎恒一郎",
-      "実行役": "黒崎蓮司",
-      "現在進行中の危険": "昏睡中の患者への再加害・記録改ざん"
-    };
+  const ENDING_URL = "https://ryosukeucchi0112-boop.github.io/ending/";
 
-    function getSelectedValue(name) {
-      const selected = document.querySelector(`input[name="${name}"]:checked`);
-      return selected ? selected.value : "";
-    }
+  const correctAnswers = {
+    "保護対象": "朝倉澪",
+    "医療事故関与者": "藍沢晋作",
+    "指示者": "黒崎恒一郎",
+    "実行役": "黒崎蓮司",
+    "現在進行中の危険": "昏睡中の患者への再加害・記録改ざん"
+  };
 
-    form.addEventListener("submit", async function (event) {
-      event.preventDefault();
-
-      const isCorrect = Object.entries(correctAnswers).every(([key, value]) => {
-        return getSelectedValue(key) === value;
-      });
-
-      if (!isCorrect) {
-        errorBox.textContent =
-          "情報が不足、または証拠内容と一致していません。保護対象・関与人物・現在進行中の危険を再確認してください。";
-        errorBox.style.display = "block";
-        errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
-        return;
-      }
-
-      errorBox.style.display = "none";
-const formData = new FormData(form);
-
-try {
-  const response = await fetch(window.location.pathname, {
-    method: "POST",
-    body: formData
-  });
-
-  if (!response.ok) {
-    throw new Error("送信に失敗しました");
+  function getSelectedValue(name) {
+    const selected = document.querySelector(`input[name="${name}"]:checked`);
+    return selected ? selected.value : "";
   }
 
-  formScreen.style.display = "none";
-  successScreen.style.display = "block";
-  successScreen.scrollIntoView({ behavior: "smooth", block: "start" });
-} catch (error) {
-  console.error(error);
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault();
 
-  errorBox.textContent =
-    "送信処理中にエラーが発生しました。Netlify側でフォームが認識されていない可能性があります。Formsに police-report が表示されているか確認してください。";
-  errorBox.style.display = "block";
-  errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
-}
+    const isCorrect = Object.entries(correctAnswers).every(([key, value]) => {
+      return getSelectedValue(key) === value;
     });
-  </script>
+
+    if (!isCorrect) {
+      errorBox.textContent =
+        "情報が不足、または証拠内容と一致していません。保護対象・関与人物・現在進行中の危険を再確認してください。";
+      errorBox.style.display = "block";
+      errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
+    errorBox.style.display = "none";
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(window.location.pathname, {
+        method: "POST",
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error("送信に失敗しました");
+      }
+
+      formScreen.style.display = "none";
+      successScreen.style.display = "block";
+      successScreen.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      setTimeout(() => {
+        window.location.href = ENDING_URL;
+      }, 2800);
+
+    } catch (error) {
+      console.error(error);
+
+      errorBox.textContent =
+        "送信処理中にエラーが発生しました。Netlify側でフォームが認識されていない可能性があります。Formsに police-report が表示されているか確認してください。";
+      errorBox.style.display = "block";
+      errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  });
+</script>
 </body>
 </html>
