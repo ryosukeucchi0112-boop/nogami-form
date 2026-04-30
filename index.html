@@ -278,6 +278,24 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-size: 13px;
     }
+    .transfer-message {
+  margin-top: 22px;
+  color: #93c5fd;
+  font-size: 14px;
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+  text-align: center;
+  animation: pulseText 1.8s ease-in-out infinite;
+}
+
+@keyframes pulseText {
+  0%, 100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
 
     .honeypot {
       display: none !important;
@@ -558,12 +576,17 @@
   <p>
     保護対象の安全確認、関係者の所在確認、城南記念総合病院内の記録保全が開始されます。
   </p>
-  <div class="success-code">
-    REPORT STATUS: ACCEPTED<br />
-    PRIORITY: URGENT<br />
-    CASE ROUTE: HCN-0417-MIO<br />
-    TRANSFER: ENDING SEQUENCE
-  </div>
+ <div class="success-code">
+  REPORT STATUS: ACCEPTED<br />
+  PRIORITY: URGENT<br />
+  CASE ROUTE: HCN-0417-MIO<br />
+  TRANSFER: ENDING SEQUENCE
+</div>
+
+<p class="transfer-message">
+  エンディングシーケンスへ接続しています。<br />
+  そのままお待ちください。
+</p>
 </section>
 
     <p class="fiction">
