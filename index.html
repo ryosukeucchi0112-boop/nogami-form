@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>浜松中央北署｜緊急通報フォーム</title>
+
+  <title>[FICTION] 緊急エビデンス送信フォーム | BORDOVER ARG</title>
+  <meta name="description" content="このページは創作作品上の架空UIです。実在の警察・行政機関・医療機関とは関係ありません。" />
+
+  <meta property="og:title" content="[FICTION] 緊急エビデンス送信フォーム | BORDOVER ARG" />
+  <meta property="og:description" content="このページは創作作品上の架空UIです。送信しても実在の警察・行政機関には届きません。" />
+  <meta property="og:type" content="website" />
 
   <style>
     * {
@@ -19,6 +25,23 @@
       color: #e5e7eb;
       font-family: "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       letter-spacing: 0.02em;
+      padding-top: 48px;
+    }
+
+    .fiction-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+      width: 100%;
+      background: #facc15;
+      color: #1f2937;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.5;
+      text-align: center;
+      padding: 10px 14px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
     }
 
     .page {
@@ -84,6 +107,16 @@
       font-size: 13px;
       line-height: 1.7;
       margin-bottom: 26px;
+    }
+
+    .submit-fiction-notice {
+      border: 1px solid rgba(251, 191, 36, 0.42);
+      background: rgba(113, 63, 18, 0.28);
+      color: #fde68a;
+      padding: 13px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.7;
     }
 
     form {
@@ -278,24 +311,25 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-size: 13px;
     }
-    .transfer-message {
-  margin-top: 22px;
-  color: #93c5fd;
-  font-size: 14px;
-  line-height: 1.8;
-  letter-spacing: 0.04em;
-  text-align: center;
-  animation: pulseText 1.8s ease-in-out infinite;
-}
 
-@keyframes pulseText {
-  0%, 100% {
-    opacity: 0.45;
-  }
-  50% {
-    opacity: 1;
-  }
-}
+    .transfer-message {
+      margin-top: 22px;
+      color: #93c5fd;
+      font-size: 14px;
+      line-height: 1.8;
+      letter-spacing: 0.04em;
+      text-align: center;
+      animation: pulseText 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulseText {
+      0%, 100% {
+        opacity: 0.45;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
 
     .honeypot {
       display: none !important;
@@ -310,6 +344,15 @@
     }
 
     @media (max-width: 640px) {
+      body {
+        padding-top: 64px;
+      }
+
+      .fiction-banner {
+        font-size: 12px;
+        padding: 9px 10px;
+      }
+
       .page {
         width: min(100% - 20px, 920px);
         padding: 20px 0 40px;
@@ -328,84 +371,90 @@
 </head>
 
 <body>
+  <div class="fiction-banner">
+    このフォームは創作作品上の架空UIです。送信しても実在の警察・行政機関には届きません。
+  </div>
+
   <main class="page">
     <section class="terminal" id="formScreen">
       <div class="topbar">
-        <span>HAMAMATSU CENTRAL NORTH POLICE / EMERGENCY INTAKE TERMINAL</span>
-        <span class="badge">URGENT REPORT</span>
+        <span>BORDOVER EMERGENCY ARCHIVE / FICTIONAL EVIDENCE INTAKE</span>
+        <span class="badge">FICTION UI</span>
       </div>
 
       <div class="content">
-        <h1>警察への緊急通報フォーム</h1>
+        <h1>BORDOVER 緊急エビデンス送信フォーム</h1>
         <p class="subtitle">
-          取得した資料を整理し、現在進行中の危険について通報してください。<br>
-          内容に重大な不足がある場合、送信は受理されません。
+          取得した劇中資料を整理し、物語内で進行中の危険について記録してください。<br>
+          内容に重大な不足がある場合、アーカイブへの統合は行われません。
         </p>
 
         <div class="notice">
-          このフォームは、保護対象・関係者・危険内容・証拠根拠が一致している場合のみ送信できます。
-          推測ではなく、確認した資料に基づいて入力してください。
+          このページは創作作品の演出用に作成された架空の送信UIです。
+          実在の警察・行政機関・医療機関・人物への連絡機能はありません。
+          入力内容は、作品内の進行判定と演出のために使用されます。
         </div>
 
-      <form
-  id="reportForm"
-  name="police-report"
-  method="POST"
-  data-netlify="true"
-  netlify
-  netlify-honeypot="bot-field"
-  enctype="multipart/form-data"
->
-  <input type="hidden" name="form-name" value="police-report" />
+        <form
+          id="reportForm"
+          name="bordover-evidence-archive"
+          method="POST"
+          data-netlify="true"
+          netlify
+          netlify-honeypot="bot-field"
+          enctype="multipart/form-data"
+        >
+          <input type="hidden" name="form-name" value="bordover-evidence-archive" />
+
           <p class="honeypot">
             <label>Don’t fill this out: <input name="bot-field" /></label>
           </p>
 
           <div class="section">
-            <p class="section-title">通報概要</p>
+            <p class="section-title">記録概要</p>
 
             <div class="field">
-              <label for="subject">通報件名</label>
+              <label for="subject">記録件名</label>
               <input
                 id="subject"
-                name="通報件名"
+                name="記録件名"
                 type="text"
-                placeholder="例：入院患者に対する記録改ざんおよび危害計画の通報"
+                placeholder="例：入院中の人物に関する証拠整理と危険記録"
                 required
               />
             </div>
           </div>
 
           <div class="section">
-            <p class="section-title">判定項目</p>
+            <p class="section-title">証拠照合項目</p>
 
             <div class="field">
-              <label>1. 今すぐ保護すべき人物</label>
+              <label>1. 救出が必要な人物（劇中）</label>
               <div class="choices">
                 <label class="choice">
-                  <input type="radio" name="保護対象" value="成瀬栞" />
+                  <input type="radio" name="救出が必要な人物" value="成瀬栞" />
                   成瀬 栞
                 </label>
 
                 <label class="choice">
-                  <input type="radio" name="保護対象" value="三浦さやか" />
+                  <input type="radio" name="救出が必要な人物" value="三浦さやか" />
                   三浦 さやか
                 </label>
 
                 <label class="choice">
-                  <input type="radio" name="保護対象" value="朝倉澪" required />
+                  <input type="radio" name="救出が必要な人物" value="朝倉澪" required />
                   朝倉 澪
                 </label>
 
                 <label class="choice">
-                  <input type="radio" name="保護対象" value="不明" />
+                  <input type="radio" name="救出が必要な人物" value="不明" />
                   不明
                 </label>
               </div>
             </div>
 
             <div class="field">
-              <label>2. 医療事故に直接関与した人物</label>
+              <label>2. 医療事故に直接関与した人物（劇中）</label>
               <div class="choices">
                 <label class="choice">
                   <input type="radio" name="医療事故関与者" value="黒崎蓮司" />
@@ -413,8 +462,8 @@
                 </label>
 
                 <label class="choice">
-                  <input type="radio" name="医療事故関与者" value="野上孝明" />
-                  野上 孝明
+                  <input type="radio" name="医療事故関与者" value="CASE HANDLER #0417" />
+                  CASE HANDLER #0417
                 </label>
 
                 <label class="choice">
@@ -430,32 +479,32 @@
             </div>
 
             <div class="field">
-              <label>3. 隠蔽・加害指示を出した人物</label>
+              <label>3. 黒幕として特定した人物</label>
               <div class="choices">
                 <label class="choice">
-                  <input type="radio" name="指示者" value="黒崎蓮司" />
+                  <input type="radio" name="黒幕として特定した人物" value="黒崎蓮司" />
                   黒崎 蓮司
                 </label>
 
                 <label class="choice">
-                  <input type="radio" name="指示者" value="藍沢晋作" />
+                  <input type="radio" name="黒幕として特定した人物" value="藍沢晋作" />
                   藍沢 晋作
                 </label>
 
                 <label class="choice">
-                  <input type="radio" name="指示者" value="黒崎恒一郎" required />
+                  <input type="radio" name="黒幕として特定した人物" value="黒崎恒一郎" required />
                   黒崎 恒一郎
                 </label>
 
                 <label class="choice">
-                  <input type="radio" name="指示者" value="三浦さやか" />
+                  <input type="radio" name="黒幕として特定した人物" value="三浦さやか" />
                   三浦 さやか
                 </label>
               </div>
             </div>
 
             <div class="field">
-              <label>4. 実行役として動いた人物</label>
+              <label>4. 実行役として動いた人物（劇中）</label>
               <div class="choices">
                 <label class="choice">
                   <input type="radio" name="実行役" value="黒崎蓮司" required />
@@ -473,32 +522,32 @@
                 </label>
 
                 <label class="choice">
-                  <input type="radio" name="実行役" value="野上孝明" />
-                  野上 孝明
+                  <input type="radio" name="実行役" value="CASE HANDLER #0417" />
+                  CASE HANDLER #0417
                 </label>
               </div>
             </div>
 
             <div class="field">
-              <label>5. 現在進行中の危険</label>
+              <label>5. 物語内で進行中の危険</label>
               <div class="choices">
                 <label class="choice">
-                  <input type="radio" name="現在進行中の危険" value="昏睡中の患者への再加害・記録改ざん" required />
+                  <input type="radio" name="物語内で進行中の危険" value="昏睡中の患者への再加害・記録改ざん" required />
                   昏睡中の患者への再加害・記録改ざん
                 </label>
 
                 <label class="choice">
-                  <input type="radio" name="現在進行中の危険" value="過去の熱中症事故" />
+                  <input type="radio" name="物語内で進行中の危険" value="過去の熱中症事故" />
                   過去の熱中症事故
                 </label>
 
                 <label class="choice">
-                  <input type="radio" name="現在進行中の危険" value="記者への取材妨害" />
+                  <input type="radio" name="物語内で進行中の危険" value="記者への取材妨害" />
                   記者への取材妨害
                 </label>
 
                 <label class="choice">
-                  <input type="radio" name="現在進行中の危険" value="学校行事の中止" />
+                  <input type="radio" name="物語内で進行中の危険" value="学校行事の中止" />
                   学校行事の中止
                 </label>
               </div>
@@ -509,158 +558,164 @@
             <p class="section-title">自由記述</p>
 
             <div class="field">
-              <label for="location">現在いると考えられる場所</label>
+              <label for="location">劇中資料から推定できる場所</label>
               <input
                 id="location"
-                name="現在地"
+                name="劇中資料から推定できる場所"
                 type="text"
-                placeholder="証拠から推定できる現在地を記入してください"
+                placeholder="証拠から推定できる劇中の場所を記入してください"
                 required
               />
             </div>
 
             <div class="field">
-              <label for="evidenceFile">資料提出・スクリーンショット提出</label>
+              <label for="evidenceFile">資料ログ・スクリーンショット</label>
               <input
                 id="evidenceFile"
-                name="提出資料"
+                name="資料ログ"
                 type="file"
                 accept="image/*,.pdf,.doc,.docx,.txt"
                 multiple
               />
               <p class="hint">
-                ※確認した証拠資料、スクリーンショット、PDF、メモファイルなどを提出できます。
+                ※劇中で確認した証拠資料、スクリーンショット、PDF、メモファイルなどを添付できます。
               </p>
             </div>
 
             <div class="field">
-              <label for="request">警察に求める対応</label>
+              <label for="request">あなたが要請する行動</label>
               <textarea
                 id="request"
-                name="警察に求める対応"
-                placeholder="最優先で実行すべき対応を、緊急性の高い順に記入してください"
+                name="あなたが要請する行動"
+                placeholder="物語内で最優先に実行すべき行動を、緊急性の高い順に記入してください"
                 required
               ></textarea>
             </div>
 
             <div class="field">
-              <label for="finalReport">最終通報文</label>
+              <label for="finalReport">最終記録文</label>
               <textarea
                 id="finalReport"
-                name="最終通報文"
-                placeholder="ここに、通報内容を文章としてまとめてください。保護対象、現在地、関係者、危険内容、証拠、警察への要請を必ず含めてください。"
+                name="最終記録文"
+                placeholder="ここに、劇中で確認した内容を文章としてまとめてください。救出が必要な人物、場所、関係者、危険内容、証拠、要請する行動を含めてください。"
                 required
               ></textarea>
               <p class="hint">
-                ※自由記述欄は、受理判断の補助資料として扱われます。
+                ※自由記述欄は、劇中アーカイブへの統合判定の補助情報として扱われます。
               </p>
             </div>
           </div>
 
           <div class="actions">
             <div class="error" id="errorBox">
-              情報が不足、または証拠内容と一致していません。保護対象・関与人物・現在進行中の危険を再確認してください。
+              情報が不足、または証拠内容と一致していません。救出が必要な人物・関与人物・物語内で進行中の危険を再確認してください。
             </div>
 
-            <button type="submit">この内容で緊急通報する</button>
+            <div class="submit-fiction-notice">
+              この送信は実在の警察に届くものではありません。表示される受理結果・担当者名はすべて架空です。
+            </div>
+
+            <button type="submit">この内容でエビデンスを送信する</button>
           </div>
         </form>
       </div>
     </section>
 
-   <section class="terminal success" id="successScreen">
-  <h2>通報を受理しました</h2>
-  <p>
-    提出された内容は、浜松中央北署・野上孝明宛の緊急通報として記録されました。
-  </p>
-  <p>
-    保護対象の安全確認、関係者の所在確認、城南記念総合病院内の記録保全が開始されます。
-  </p>
- <div class="success-code">
-  REPORT STATUS: ACCEPTED<br />
-  PRIORITY: URGENT<br />
-  CASE ROUTE: HCN-0417-MIO<br />
-  TRANSFER: ENDING SEQUENCE
-</div>
+    <section class="terminal success" id="successScreen">
+      <h2>記録が統合されました</h2>
+      <p>
+        提出された内容は、BORDOVER EMERGENCY ARCHIVE 内の劇中エビデンスとして記録されました。
+      </p>
+      <p>
+        救出対象の所在、関係者の動き、関連施設内の記録保全に関する演出シーケンスへ接続します。
+      </p>
 
-<p class="transfer-message">
-  エンディングシーケンスへ接続しています。<br />
-  そのままお待ちください。
-</p>
-</section>
+      <div class="success-code">
+        ARCHIVE STATUS: EVIDENCE LOGGED<br />
+        SIGNAL: VERIFIED<br />
+        ARCHIVE LINK: MIO-0417<br />
+        CASE HANDLER: #0417<br />
+        TRANSFER: ENDING SEQUENCE
+      </div>
+
+      <p class="transfer-message">
+        エンディングシーケンスへ接続しています。<br />
+        画面は自動で切り替わります。
+      </p>
+    </section>
 
     <p class="fiction">
-      このページはフィクション作品内の演出ページです。実在の警察機関・医療機関・人物とは関係ありません。
+      このページはフィクション作品内の演出ページです。実在の警察機関・行政機関・医療機関・人物とは関係ありません。
     </p>
   </main>
 
- <script>
-  const form = document.getElementById("reportForm");
-  const errorBox = document.getElementById("errorBox");
-  const formScreen = document.getElementById("formScreen");
-  const successScreen = document.getElementById("successScreen");
+  <script>
+    const form = document.getElementById("reportForm");
+    const errorBox = document.getElementById("errorBox");
+    const formScreen = document.getElementById("formScreen");
+    const successScreen = document.getElementById("successScreen");
 
-  const ENDING_URL = "https://ryosukeucchi0112-boop.github.io/ending/";
+    const ENDING_URL = "https://ryosukeucchi0112-boop.github.io/ending/";
 
-  const correctAnswers = {
-    "保護対象": "朝倉澪",
-    "医療事故関与者": "藍沢晋作",
-    "指示者": "黒崎恒一郎",
-    "実行役": "黒崎蓮司",
-    "現在進行中の危険": "昏睡中の患者への再加害・記録改ざん"
-  };
+    const correctAnswers = {
+      "救出が必要な人物": "朝倉澪",
+      "医療事故関与者": "藍沢晋作",
+      "黒幕として特定した人物": "黒崎恒一郎",
+      "実行役": "黒崎蓮司",
+      "物語内で進行中の危険": "昏睡中の患者への再加害・記録改ざん"
+    };
 
-  function getSelectedValue(name) {
-    const selected = document.querySelector(`input[name="${name}"]:checked`);
-    return selected ? selected.value : "";
-  }
-
-  form.addEventListener("submit", async function (event) {
-    event.preventDefault();
-
-    const isCorrect = Object.entries(correctAnswers).every(([key, value]) => {
-      return getSelectedValue(key) === value;
-    });
-
-    if (!isCorrect) {
-      errorBox.textContent =
-        "情報が不足、または証拠内容と一致していません。保護対象・関与人物・現在進行中の危険を再確認してください。";
-      errorBox.style.display = "block";
-      errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
-      return;
+    function getSelectedValue(name) {
+      const selected = document.querySelector(`input[name="${name}"]:checked`);
+      return selected ? selected.value : "";
     }
 
-    errorBox.style.display = "none";
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
 
-    const formData = new FormData(form);
-
-    try {
-      const response = await fetch(window.location.pathname, {
-        method: "POST",
-        body: formData
+      const isCorrect = Object.entries(correctAnswers).every(([key, value]) => {
+        return getSelectedValue(key) === value;
       });
 
-      if (!response.ok) {
-        throw new Error("送信に失敗しました");
+      if (!isCorrect) {
+        errorBox.textContent =
+          "情報が不足、または証拠内容と一致していません。救出が必要な人物・関与人物・物語内で進行中の危険を再確認してください。";
+        errorBox.style.display = "block";
+        errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
       }
 
-      formScreen.style.display = "none";
-      successScreen.style.display = "block";
-      successScreen.scrollIntoView({ behavior: "smooth", block: "start" });
+      errorBox.style.display = "none";
 
-      setTimeout(() => {
-        window.location.href = ENDING_URL;
-      }, 2800);
+      const formData = new FormData(form);
 
-    } catch (error) {
-      console.error(error);
+      try {
+        const response = await fetch(window.location.pathname, {
+          method: "POST",
+          body: formData
+        });
 
-      errorBox.textContent =
-        "送信処理中にエラーが発生しました。Netlify側でフォームが認識されていない可能性があります。Formsに police-report が表示されているか確認してください。";
-      errorBox.style.display = "block";
-      errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  });
-</script>
+        if (!response.ok) {
+          throw new Error("送信に失敗しました");
+        }
+
+        formScreen.style.display = "none";
+        successScreen.style.display = "block";
+        successScreen.scrollIntoView({ behavior: "smooth", block: "start" });
+
+        setTimeout(() => {
+          window.location.href = ENDING_URL;
+        }, 2800);
+
+      } catch (error) {
+        console.error(error);
+
+        errorBox.textContent =
+          "送信処理中にエラーが発生しました。Netlify側でフォームが認識されていない可能性があります。Formsに bordover-evidence-archive が表示されているか確認してください。";
+        errorBox.style.display = "block";
+        errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  </script>
 </body>
 </html>
